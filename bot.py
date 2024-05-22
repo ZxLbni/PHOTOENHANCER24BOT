@@ -713,60 +713,55 @@ async def UpscaleImages(image: bytes) -> str:
     return upscaled_file_path
 
 
-# Command handler for other messages
-# Command handler for other messages
-@app.on_message(~filters.command("spotify"))
-async def spotify_downloader(bot: Client, message: Message):
-    # Send typing action while processing
-    await bot.send_chat_action(chat_id=message.chat.id, action=pyrogram.enums.ChatAction.TYPING)
-    # Extract Spotify URL from the message
-    spotify_url = message.text.strip()
+#Direct link for Spotify to link 
 
-    # API URL for Spotify downloader
-    api_url = f"https://spotifydownloader.hellonepdevs.workers.dev/?url={spotify_url}"
+bot.sendChatAction(chat_id=message.chat.id, action="typing")
 
-    try:
-        # Request data from the API
-        response = HTTP(api_url)
-        response.raise_for_status()
-        data = response.json()
+spotify_url = message.text
+api_url = f"https://spotifydownloader.hellonepdevs.workers.dev/?url={spotify_url}"
 
-        # Create caption for the message
-        caption = (
-            f"🎵 <b>{data['title']}</b> by <i>{data['artist']}</i>\n\n"
-            f"🎧 <b>Track:</b> {data['track']}\n"
-            f"⏱️ <b>Duration:</b> {data['time']}\n\n"
-            f"📥 <b><a href='{data['download_url']}'>Download the track here</a></b> 🎶"
-        )
+try:
+    response = HTTP.get(api_url)
+    response.raise_for_status()
+    data = response.json()
+    
 
-        # Inline keyboard for joining a channel (customize as needed)
-        inline_keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Join", url="https://t.me/Sunrises24BotUpdates")]
-        ])
+    caption = (
+        f"🎵 <b>{data['title']}</b> by <i>{data['artist']}</i>\n\n"
+        f"🎧 <b>Track:</b> {data['track']}\n"
+        f"⏱️ <b>Duration:</b> {data['time']}\n\n"
+        f"📥 <b><a href='{data['download_url']}'>Download the track here</a></b> 🎶"
+    )
 
-        # Send photo with caption and inline keyboard
-        await bot.send_photo(
-            chat_id=message.chat.id,
-            photo=data["image"],
-            caption=caption,
-            reply_markup=inline_keyboard
-        )
 
-        # Send document (track) with caption and inline keyboard
-        await bot.send_document(
-            chat_id=message.chat.id,
-            document=data["download_url"],
-            caption="📥 <b>Download the track here</b> 🎶\n\n" + caption,
-            reply_markup=inline_keyboard
-        )
+    inline_keyboard = InlineKeyboardMarkup([
+        [InlineKeyboardButton("Join", url="https://t.me/Sunrises24BotUpdates")]
+    ])
+    
 
-    except Exception as e:
-        # Handle any errors
-        await bot.send_message(
-            chat_id=message.chat.id,
-            text=f"❌ <b>Error:</b> <i>{str(e)}</i>",
-            parse_mode="HTML"
-        )
+    bot.sendPhoto(
+        chat_id=message.chat.id,
+        photo=data["image"],
+        caption=caption,
+        parse_mode="HTML",
+        reply_markup=inline_keyboard
+    )
+
+
+    bot.sendDocument(
+        chat_id=message.chat.id,
+        document=data["download_url"],
+        caption="📥 <b>Download the track here</b> 🎶\n\n" + caption,
+        parse_mode="HTML",
+        reply_markup=inline_keyboard
+    )
+
+except Exception as e:
+    bot.sendMessage(
+        chat_id=message.chat.id,
+        text=f"❌ <b>Error:</b> <i>{str(e)}</i>",
+        parse_mode="HTML"
+    )
         
 # Run the bot
 app.run()
