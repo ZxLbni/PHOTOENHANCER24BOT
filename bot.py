@@ -717,8 +717,7 @@ async def UpscaleImages(image: bytes) -> str:
 @app.on_message(~filters.command("spotify"))
 async def spotify_downloader(bot: Client, message: Message):
     # Send typing action while processing
-    await bot.send_chat_action(chat_id=message.chat.id, action="typing")
-
+    await bot.send_chat_action(chat_id=message.chat.id, action=pyrogram.ChatAction.TYPING)
     # Extract Spotify URL from the message
     spotify_url = message.text.strip()
 
