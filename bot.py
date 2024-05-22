@@ -21,6 +21,7 @@ API_HASH = os.environ.get("API_HASH")
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 RemoveBG_API = os.environ.get("RemoveBG_API")
 FSUB_CHANNEL = os.environ.get("FSUB_CHANNEL")
+SUNRISES_PIC = os.environ.get("SUNRISES_PIC") #Telegraph link Start Pic 
 
 API = "https://apis.xditya.me/lyrics?song="
 
@@ -36,40 +37,64 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
-# Function to handle /start command
-@app.on_message(filters.command("start"))
-async def start(client, message):       
+# Global variable to track whether the user has joined the channel
+joined_channel = {}
+
+@Client.on_message(filters.command("start") & filters.private)
+async def start(bot, msg: Message):       
     if FSUB_CHANNEL:
         try:
             # Check if the user is banned
-            user = await client.get_chat_member(FSUB_CHANNEL, message.chat.id)
+            user = await bot.get_chat_member(FSUB_CHANNEL, msg.chat.id)
             if user.status == "kicked":
-                await message.reply_text("Sᴏʀʀʏ, Yᴏᴜ ᴀʀᴇ **B ᴀ ɴ ɴ ᴇ ᴅ**")
+                await msg.reply_text("Sorry, you are **banned**.")
                 return
         except UserNotParticipant:
             # If the user is not a participant, prompt them to join
-            await message.reply_text(
+            await msg.reply_text(
                 text="**❤️ Pʟᴇᴀꜱᴇ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Bᴇғᴏʀᴇ Uꜱɪɴɢ Mᴇ ❤️**",
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton(text="➕ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ ➕", url=f"https://t.me/{FSUB_CHANNEL}")]
+                    [InlineKeyboardButton(text="Join Updates Channel", url=f"https://t.me/{FSUB_CHANNEL}")]
                 ])
             )
+            # Set the user's joined status to False
+            joined_channel[msg.chat.id] = False
             return
         else:
-            # If the user is not banned and is a participant, send the start message
-            start_text = START_TEXT.format(message.from_user.first_name) if hasattr(message, "message_id") else START_TEXT
-            await message.reply_text(
-                text=start_text,
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ 🧑🏻‍💻", url=f"https://t.me/Sunrises_24")],
-                        [InlineKeyboardButton("Uᴘᴅᴀᴛᴇꜱ 📢", url="https://t.me/Sunrises24BotUpdates")],
-                        [InlineKeyboardButton("Cʜᴀɴɴᴇʟ 🎞️", url="https://t.me/sunriseseditsoffical6")]
-                    ]
+            # If the user is not banned and is a participant, send the start message with photo
+            start_text = START_TEXT.format(msg.from_user.first_name) if hasattr(msg, "message_id") else START_TEXT
+            await bot.send_photo(
+                chat_id=msg.chat.id,
+                photo=SUNRISES_PIC,
+                caption=start_text,
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("Developer ❤️", url="https://t.me/Sunrises_24")],
+                    [InlineKeyboardButton("Updates 📢", url="https://t.me/Sunrises24botupdates")],                                                                         
+                    [InlineKeyboardButton("Support ❤️‍🔥", url="https://t.me/Sunrises24botSupport")]]          
                 ),
-                reply_to_message_id=getattr(message, "message_id", None)
+                reply_to_message_id=getattr(msg, "message_id", None)
             )
-            return
+            # Set the user's joined status to True
+            joined_channel[msg.chat.id] = True
+            return            
+
+# Add other command handlers here...
+
+# Check membership for other command handlers
+@Client.on_message(filters.private & ~filters.command("start"))
+async def check_membership(bot, msg: Message):
+    # If the user hasn't joined the channel, prompt them to join
+    if msg.chat.id in joined_channel and not joined_channel[msg.chat.id]:
+        await msg.reply_text(
+            text="**❤️ Pʟᴇᴀꜱᴇ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Bᴇғᴏʀᴇ Uꜱɪɴɢ Mᴇ ❤️**",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton(text="Join Updates Channel", url=f"https://t.me/{FSUB_CHANNEL}")]
+            ])
+        )
+        return
+    # If the user has joined the channel, continue with the command execution
+    await bot.continue_propagation(msg)
+
    
 print("Bot Started!🦋 © t.me/Sunrises_24")
 
@@ -686,6 +711,64 @@ async def UpscaleImages(image: bytes) -> str:
     with open(upscaled_file_path, "wb") as output_file:
         output_file.write(content)
     return upscaled_file_path
-    
+
+
+# Command handler for other messages
+@app.on_message(~filters.command("spotify"))
+async def spotify_downloader(bot: Client, message: Message):
+    # Send typing action while processing
+    await bot.send_chat_action(chat_id=message.chat.id, action="typing")
+
+    # Extract Spotify URL from the message
+    spotify_url = message.text.strip()
+
+    # API URL for Spotify downloader
+    api_url = f"https://spotifydownloader.hellonepdevs.workers.dev/?url={spotify_url}"
+
+    try:
+        # Request data from the API
+        response = HTTP(api_url)
+        response.raise_for_status()
+        data = response.json()
+
+        # Create caption for the message
+        caption = (
+            f"🎵 <b>{data['title']}</b> by <i>{data['artist']}</i>\n\n"
+            f"🎧 <b>Track:</b> {data['track']}\n"
+            f"⏱️ <b>Duration:</b> {data['time']}\n\n"
+            f"📥 <b><a href='{data['download_url']}'>Download the track here</a></b> 🎶"
+        )
+
+        # Inline keyboard for joining a channel (customize as needed)
+        inline_keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("Join", url="https://t.me/Sunrises24BotUpdates")]
+        ])
+
+        # Send photo with caption and inline keyboard
+        await bot.send_photo(
+            chat_id=message.chat.id,
+            photo=data["image"],
+            caption=caption,
+            parse_mode="HTML",
+            reply_markup=inline_keyboard
+        )
+
+        # Send document (track) with caption and inline keyboard
+        await bot.send_document(
+            chat_id=message.chat.id,
+            document=data["download_url"],
+            caption="📥 <b>Download the track here</b> 🎶\n\n" + caption,
+            parse_mode="HTML",
+            reply_markup=inline_keyboard
+        )
+
+    except Exception as e:
+        # Handle any errors
+        await bot.send_message(
+            chat_id=message.chat.id,
+            text=f"❌ <b>Error:</b> <i>{str(e)}</i>",
+            parse_mode="HTML"
+        )
+        
 # Run the bot
 app.run()
