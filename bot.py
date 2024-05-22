@@ -712,56 +712,6 @@ async def UpscaleImages(image: bytes) -> str:
         output_file.write(content)
     return upscaled_file_path
 
-
-#Direct link for Spotify to link 
-
-bot.sendChatAction(chat_id=message.chat.id, action="typing")
-
-spotify_url = message.text
-api_url = f"https://spotifydownloader.hellonepdevs.workers.dev/?url={spotify_url}"
-
-try:
-    response = HTTP.get(api_url)
-    response.raise_for_status()
-    data = response.json()
-    
-
-    caption = (
-        f"🎵 <b>{data['title']}</b> by <i>{data['artist']}</i>\n\n"
-        f"🎧 <b>Track:</b> {data['track']}\n"
-        f"⏱️ <b>Duration:</b> {data['time']}\n\n"
-        f"📥 <b><a href='{data['download_url']}'>Download the track here</a></b> 🎶"
-    )
-
-
-    inline_keyboard = InlineKeyboardMarkup([
-        [InlineKeyboardButton("Join", url="https://t.me/Sunrises24BotUpdates")]
-    ])
-    
-
-    bot.sendPhoto(
-        chat_id=message.chat.id,
-        photo=data["image"],
-        caption=caption,
-        parse_mode="HTML",
-        reply_markup=inline_keyboard
-    )
-
-
-    bot.sendDocument(
-        chat_id=message.chat.id,
-        document=data["download_url"],
-        caption="📥 <b>Download the track here</b> 🎶\n\n" + caption,
-        parse_mode="HTML",
-        reply_markup=inline_keyboard
-    )
-
-except Exception as e:
-    bot.sendMessage(
-        chat_id=message.chat.id,
-        text=f"❌ <b>Error:</b> <i>{str(e)}</i>",
-        parse_mode="HTML"
-    )
         
 # Run the bot
 app.run()
