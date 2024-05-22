@@ -25,12 +25,16 @@ Press Below Button to Deploy!
 
 * `FSUB_CHANNEL` - your Force Sub channel or updates channel only Username
 
+*  `SUNRISES_PIC` - Your Bot Start Pic as telegraph link.
+  
+
 ### Bot Commands
  ```
 start - 𝐵𝑜𝑡 𝑎𝑙𝑖𝑣𝑒 𝑜𝑟 𝑁𝑜𝑡 🚶🏻
 help - 𝐺𝑒𝑡 𝑑𝑒𝑡𝑎𝑖𝑙𝑒𝑑 𝑜𝑓 𝑏𝑜𝑡 𝑐𝑜𝑚𝑚𝑎𝑛𝑑𝑠 📝
 about - 𝐿𝑒𝑎𝑟𝑛 𝑚𝑜𝑟𝑒 𝑎𝑏𝑜𝑢𝑡 𝑡ℎ𝑖𝑠 𝑏𝑜𝑡 🧑🏻‍💻
 ping - 𝑇𝑜 𝐶ℎ𝑒𝑐𝑘 𝑇ℎ𝑒 𝑃𝑖𝑛𝑔 𝑂𝑓 𝑇ℎ𝑒 𝐵𝑜𝑡 📍
+spotify - 𝑇𝑜 𝑆𝑝𝑜𝑡𝑖𝑓𝑦 𝑡𝑜 𝑚𝑝3 𝑙𝑖𝑛𝑘🎵
 portrait - 𝐶𝑜𝑛𝑣𝑒𝑟𝑡 𝑖𝑚𝑎𝑔𝑒 𝑡𝑜 𝑃𝑜𝑟𝑡𝑟𝑎𝑖𝑡✨
 grayscale - 𝐶𝑜𝑛𝑣𝑒𝑟𝑡 𝑖𝑚𝑎𝑔𝑒 𝑡𝑜 𝑔𝑟𝑎𝑦𝑠𝑐𝑎𝑙𝑒
 enhance - 𝐸𝑛ℎ𝑎𝑛𝑐𝑒 𝑖𝑚𝑎𝑔𝑒✨
@@ -42,7 +46,7 @@ removebgwhite -  𝑇𝑜 𝑟𝑒𝑚𝑜𝑣𝑒 𝑡ℎ𝑒 𝑏𝑎𝑐𝑘�
 telegraph - 𝑇𝑜 𝑔𝑒𝑡 𝑇𝑒𝑙𝑒𝑔𝑟𝑎𝑝ℎ 𝐿𝑖𝑛𝑘 🔗
 font - 𝑐𝑜𝑚𝑚𝑎𝑛𝑑 𝑤𝑖𝑡ℎ 𝑡𝑒𝑥𝑡 𝑡𝑜 𝐹𝑜𝑛𝑡 🔠
 lyrics - 𝑇𝑜 𝑔𝑒𝑡 𝑙𝑦𝑟𝑖𝑐𝑠 𝑜𝑓 𝑠𝑜𝑛𝑔𝑠 📝🎶
-ssong - 𝑇𝑜 𝑔𝑒𝑡 𝑡ℎ𝑒 𝑠𝑜𝑛𝑔 𝑓𝑟𝑜𝑚 𝐽𝑖𝑜𝑆𝑎𝑎𝑣𝑛🎵
+ssong - 𝑇𝑜 𝑔𝑒𝑡 𝑡ℎ𝑒 𝑠𝑜𝑛𝑔 𝑓𝑟𝑜𝑚 𝐽𝑖𝑜𝑆𝑎𝑎𝑣𝑛🎧 - Command Maintenance
 repo - 𝑇𝑜 𝑠𝑒𝑎𝑟𝑐ℎ 𝑟𝑒𝑝𝑜 𝑓𝑟𝑜𝑚 𝐺𝑖𝑡𝐻𝑢𝑏 🖇️
 
  ```
