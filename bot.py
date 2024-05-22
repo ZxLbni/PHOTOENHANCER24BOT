@@ -37,65 +37,42 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
-# Global variable to track whether the user has joined the channel
-joined_channel = {}
-
-@Client.on_message(filters.command("start") & filters.private)
-async def start(bot, msg: Message):       
+@app.on_message(filters.command("start"))
+async def start(client, message):       
     if FSUB_CHANNEL:
         try:
             # Check if the user is banned
-            user = await bot.get_chat_member(FSUB_CHANNEL, msg.chat.id)
+            user = await client.get_chat_member(FSUB_CHANNEL, message.chat.id)
             if user.status == "kicked":
-                await msg.reply_text("Sorry, you are **banned**.")
+                await message.reply_text("Sᴏʀʀʏ, Yᴏᴜ ᴀʀᴇ **B ᴀ ɴ ɴ ᴇ ᴅ**")
                 return
         except UserNotParticipant:
             # If the user is not a participant, prompt them to join
-            await msg.reply_text(
+            await message.reply_text(
                 text="**❤️ Pʟᴇᴀꜱᴇ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Bᴇғᴏʀᴇ Uꜱɪɴɢ Mᴇ ❤️**",
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton(text="Join Updates Channel", url=f"https://t.me/{FSUB_CHANNEL}")]
+                    [InlineKeyboardButton(text="➕ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ ➕", url=f"https://t.me/{FSUB_CHANNEL}")]
                 ])
             )
-            # Set the user's joined status to False
-            joined_channel[msg.chat.id] = False
             return
         else:
-            # If the user is not banned and is a participant, send the start message with photo
-            start_text = START_TEXT.format(msg.from_user.first_name) if hasattr(msg, "message_id") else START_TEXT
-            await bot.send_photo(
-                chat_id=msg.chat.id,
+            # If the user is not banned and is a participant, send the start message with the start pic
+            start_text = START_TEXT.format(message.from_user.first_name) if hasattr(message, "message_id") else START_TEXT
+            await message.reply_photo(
                 photo=SUNRISES_PIC,
                 caption=start_text,
-                reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("Developer ❤️", url="https://t.me/Sunrises_24")],
-                    [InlineKeyboardButton("Updates 📢", url="https://t.me/Sunrises24botupdates")],                                                                         
-                    [InlineKeyboardButton("Support ❤️‍🔥", url="https://t.me/Sunrises24botSupport")]]          
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ 🧑🏻‍💻", url=f"https://t.me/Sunrises_24"),
+                         InlineKeyboardButton("Uᴘᴅᴀᴛᴇꜱ 📢", url="https://t.me/Sunrises24BotUpdates")],
+                        [InlineKeyboardButton("Support ❤️‍🔥", url="https://t.me/Sunrises24botSupport"),
+                         InlineKeyboardButton("Cʜᴀɴɴᴇʟ 🎞️", url="https://t.me/sunriseseditsoffical6")]
+                    ]
                 ),
-                reply_to_message_id=getattr(msg, "message_id", None)
+                reply_to_message_id=getattr(message, "message_id", None)
             )
-            # Set the user's joined status to True
-            joined_channel[msg.chat.id] = True
-            return            
-
-# Add other command handlers here...
-
-# Check membership for other command handlers
-@Client.on_message(filters.private & ~filters.command("start"))
-async def check_membership(bot, msg: Message):
-    # If the user hasn't joined the channel, prompt them to join
-    if msg.chat.id in joined_channel and not joined_channel[msg.chat.id]:
-        await msg.reply_text(
-            text="**❤️ Pʟᴇᴀꜱᴇ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Bᴇғᴏʀᴇ Uꜱɪɴɢ Mᴇ ❤️**",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton(text="Join Updates Channel", url=f"https://t.me/{FSUB_CHANNEL}")]
-            ])
-        )
-        return
-    # If the user has joined the channel, continue with the command execution
-    await bot.continue_propagation(msg)
-
-   
+            return
+                          
 print("Bot Started!🦋 © t.me/Sunrises_24")
 
 # Function to handle /help command
