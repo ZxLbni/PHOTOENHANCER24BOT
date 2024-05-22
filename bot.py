@@ -714,6 +714,7 @@ async def UpscaleImages(image: bytes) -> str:
 
 
 # Command handler for other messages
+# Command handler for other messages
 @app.on_message(~filters.command("spotify"))
 async def spotify_downloader(bot: Client, message: Message):
     # Send typing action while processing
@@ -748,7 +749,6 @@ async def spotify_downloader(bot: Client, message: Message):
             chat_id=message.chat.id,
             photo=data["image"],
             caption=caption,
-            parse_mode="HTML",
             reply_markup=inline_keyboard
         )
 
@@ -757,7 +757,6 @@ async def spotify_downloader(bot: Client, message: Message):
             chat_id=message.chat.id,
             document=data["download_url"],
             caption="📥 <b>Download the track here</b> 🎶\n\n" + caption,
-            parse_mode="HTML",
             reply_markup=inline_keyboard
         )
 
