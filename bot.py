@@ -13,6 +13,9 @@ from pyrogram.errors import UserNotParticipant, UserBannedInChannel
 from lexica import AsyncClient
 from utils import getFile
 
+# Store the photos temporarily in a dictionary
+photo_dict = {}
+
 #ALL FILES UPLOADED - CREDITS 🌟 - @Sunrises_24
 
 # Retrieve your Telegram API credentials and bot token
@@ -689,6 +692,73 @@ async def UpscaleImages(image: bytes) -> str:
         output_file.write(content)
     return upscaled_file_path
 
+
+@app.on_message(filters.command("collage") & filters.private)
+async def collage_command(client, message):
+    user_id = message.from_user.id
+    photo_dict[user_id] = []
+    await message.reply_text("Please send me 10 photos to create a collage.")
+
+@app.on_message(filters.photo & filters.private)
+async def collect_photos(client, message):
+    user_id = message.from_user.id
+    if user_id in photo_dict:
+        photo_path = await message.download()
+        photo_dict[user_id].append(photo_path)
         
+        if len(photo_dict[user_id]) == 10:
+            await message.reply_text(
+                "You have uploaded 10 photos. Click the button below to create the collage.",
+                reply_markup=InlineKeyboardMarkup(
+                    [[InlineKeyboardButton("Create Collage", callback_data="create_collage")]]
+                )
+            )
+
+@app.on_callback_query(filters.regex("create_collage"))
+async def create_collage_callback(client, callback_query: CallbackQuery):
+    user_id = callback_query.from_user.id
+    
+    if user_id in photo_dict and len(photo_dict[user_id]) == 10:
+        photos = photo_dict[user_id]
+        collage = create_collage(photos)
+        collage_path = f"collage_{user_id}.png"
+        collage.save(collage_path)
+        
+        await client.send_photo(
+            chat_id=callback_query.message.chat.id,
+            photo=collage_path,
+            caption="Here's your collage!"
+        )
+        os.remove(collage_path)
+        
+        # Clear the user's photo list
+        for photo in photo_dict[user_id]:
+            os.remove(photo)
+        del photo_dict[user_id]
+    else:
+        await callback_query.answer("You need to upload exactly 10 photos.", show_alert=True)
+
+def create_collage(image_paths, collage_width=1000):
+    images = [Image.open(image_path) for image_path in image_paths]
+    
+    # Resize images to be the same width
+    img_width, img_height = images[0].size
+    for i in range(1, len(images)):
+        images[i] = images[i].resize((img_width, img_height))
+    
+    collage_height = img_height * 2
+    collage = Image.new('RGB', (collage_width, collage_height))
+    
+    # Positioning images in two rows
+    y_offset = 0
+    for i in range(2):  # Two rows
+        x_offset = 0
+        for j in range(5):  # Five images per row
+            collage.paste(images[i*5 + j], (x_offset, y_offset))
+            x_offset += img_width
+        y_offset += img_height
+    
+    return collage
+      
 # Run the bot
 app.run()
