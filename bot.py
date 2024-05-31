@@ -706,7 +706,10 @@ async def collect_photos(client, message):
         photo_path = await message.download()
         photo_dict[user_id].append(photo_path)
         
-        if len(photo_dict[user_id]) == 10:
+        photo_count = len(photo_dict[user_id])
+        if photo_count < 10:
+            await message.reply_text(f"Received {photo_count} photo(s). Please send {10 - photo_count} more photo(s).")
+        if photo_count == 10:
             await message.reply_text(
                 "You have uploaded 10 photos. Click the button below to create the collage.",
                 reply_markup=InlineKeyboardMarkup(
@@ -715,7 +718,7 @@ async def collect_photos(client, message):
             )
 
 @app.on_callback_query(filters.regex("create_collage"))
-async def create_collage_callback(client, callback_query: CallbackQuery):
+async def create_collage_callback(client, callback_query):
     user_id = callback_query.from_user.id
     
     if user_id in photo_dict and len(photo_dict[user_id]) == 10:
@@ -741,7 +744,7 @@ async def create_collage_callback(client, callback_query: CallbackQuery):
 def create_collage(image_paths, collage_width=1000):
     images = [Image.open(image_path) for image_path in image_paths]
     
-    # Resize images to be the same width
+    # Resize images to be the same width and height
     img_width, img_height = images[0].size
     for i in range(1, len(images)):
         images[i] = images[i].resize((img_width, img_height))
@@ -754,11 +757,14 @@ def create_collage(image_paths, collage_width=1000):
     for i in range(2):  # Two rows
         x_offset = 0
         for j in range(5):  # Five images per row
-            collage.paste(images[i*5 + j], (x_offset, y_offset))
+            collage.paste(images[i * 5 + j], (x_offset, y_offset))
             x_offset += img_width
         y_offset += img_height
     
     return collage
+
+# Run the bot
+app.run()
       
 # Run the bot
 app.run()
