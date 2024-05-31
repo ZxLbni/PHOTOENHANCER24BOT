@@ -749,18 +749,17 @@ def create_collage(image_paths, collage_width=1000):
     for i in range(1, len(images)):
         images[i] = images[i].resize((img_width, img_height))
     
-    # Calculate the total collage height for two rows of images
-    collage_height = img_height * 2
-    collage = Image.new('RGB', (img_width * 5, collage_height))
+    # Calculate the total collage height for five rows of images
+    collage_height = img_height * 5
+    collage = Image.new('RGB', (img_width * 2, collage_height))
     
-    # Positioning images in two rows
-    y_offset = 0
-    for i in range(2):  # Two rows
-        x_offset = 0
-        for j in range(5):  # Five images per row
-            collage.paste(images[i * 5 + j], (x_offset, y_offset))
-            x_offset += img_width
-        y_offset += img_height
+    # Positioning images in two columns
+    x_offsets = [0, img_width]  # Two columns
+    for i in range(2):  # Two columns
+        y_offset = 0
+        for j in range(5):  # Five images per column
+            collage.paste(images[i * 5 + j], (x_offsets[i], y_offset))
+            y_offset += img_height
     
     return collage
       
