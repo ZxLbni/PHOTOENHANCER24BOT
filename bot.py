@@ -749,8 +749,9 @@ def create_collage(image_paths, collage_width=1000):
     for i in range(1, len(images)):
         images[i] = images[i].resize((img_width, img_height))
     
+    # Calculate the total collage height for two rows of images
     collage_height = img_height * 2
-    collage = Image.new('RGB', (collage_width, collage_height))
+    collage = Image.new('RGB', (img_width * 5, collage_height))
     
     # Positioning images in two rows
     y_offset = 0
@@ -762,9 +763,6 @@ def create_collage(image_paths, collage_width=1000):
         y_offset += img_height
     
     return collage
-
-# Run the bot
-app.run()
       
 # Run the bot
 app.run()
