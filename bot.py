@@ -259,7 +259,9 @@ async def song(client, message):
     pak = await message.reply('Downloading...')
     
     try:
-        r = requests.get(f"https://saavn.dev/search/songs?query={args}&page=1&limit=1").json()
+        response = requests.get(f"https://saavn.dev/search/songs?query={args}&page=1&limit=1")
+        r = response.json()
+        await pak.edit(f"API response: {r}")  # Debug: show the entire API response
     except Exception as e:
         await pak.edit(f"Error fetching song data: {str(e)}")
         return
@@ -302,7 +304,8 @@ async def song(client, message):
 async def repo(client, message):
     if len(message.command) > 1:
         query = ' '.join(message.command[1:])
-        response = requests.get(f"https://api.github.com/search/repositories?q={query}")
+        response = requests.get(f"https://api.github.com/search/repositories?q={query}
+        ")
         if response.status_code == 200:
             data = response.json()
             if data['total_count'] > 0:
