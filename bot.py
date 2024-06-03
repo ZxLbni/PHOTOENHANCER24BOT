@@ -304,8 +304,7 @@ async def song(client, message):
 async def repo(client, message):
     if len(message.command) > 1:
         query = ' '.join(message.command[1:])
-        response = requests.get(f"https://api.github.com/search/repositories?q={query}
-        ")
+        response = requests.get(f"https://api.github.com/search/repositories?q={query}")
         if response.status_code == 200:
             data = response.json()
             if data['total_count'] > 0:
