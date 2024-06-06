@@ -1,4 +1,5 @@
 #Sᴜɴʀɪsᴇs Hᴀʀsʜᴀ 𝟸𝟺 🇮🇳 ᵀᴱᴸ
+from __future__ import unicode_literals
 import os, asyncio, time
 import requests, wget, math
 from pyrogram.types import (InlineKeyboardButton,  InlineKeyboardMarkup)
@@ -12,7 +13,6 @@ from pyrogram.enums import ChatAction
 from pyrogram.errors import UserNotParticipant, UserBannedInChannel 
 from lexica import AsyncClient
 from utils import getFile
-from __future__ import unicode_literals
 from pyrogram.types import Message
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
