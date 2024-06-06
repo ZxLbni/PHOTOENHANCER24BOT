@@ -13,6 +13,8 @@ lexica-api
 lyricsgenius
 jsons
 opencv-contrib-python-headless
-youtube_search
-youtubesearchpython
-yt-dlp 
+
+#---ytdl----#
+youtube-search-python
+youtube-search
+yt-dlp==2023.2.17
