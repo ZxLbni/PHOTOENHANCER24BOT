@@ -109,8 +109,9 @@ Hᴇʀᴇ Is Tʜᴇ Hᴇʟᴘ Fᴏʀ Mʏ Cᴏᴍᴍᴀɴᴅs.
 /font - 𝑐𝑜𝑚𝑚𝑎𝑛𝑑 𝑤𝑖𝑡ℎ 𝑡𝑒𝑥𝑡 𝑡𝑜 𝐹𝑜𝑛𝑡 🔠
 Enter Any Text Eg:- /font [text]
 
-◉ JɪᴏSᴀᴀᴠɴ
-/ssong - 𝑇𝑜 𝑔𝑒𝑡 𝑡ℎ𝑒 𝑠𝑜𝑛𝑔 𝑓𝑟𝑜𝑚 𝐽𝑖𝑜𝑆𝑎𝑎𝑣𝑛🎵
+◉ YᴏᴜTᴜʙᴇ
+/song - 𝐷𝑜𝑤𝑛𝑙𝑜𝑎𝑑 𝑌𝑜𝑢𝑟 𝑆𝑜𝑛𝑔 𝐹𝑟𝑜𝑚 𝑌𝑜𝑢𝑇𝑢𝑏𝑒 🎵
+/video - 𝐷𝑜𝑤𝑛𝑙𝑜𝑎𝑑 𝑌𝑜𝑢𝑟 𝑉𝑖𝑑𝑒𝑜 𝑆𝑜𝑛𝑔 𝐹𝑟𝑜𝑚 𝑌𝑜𝑢𝑇𝑢𝑏𝑒 🎞️
 
 ◉ Lʏʀɪᴄs 
 /lyrics - 𝑇𝑜 𝑔𝑒𝑡 𝑙𝑦𝑟𝑖𝑐𝑠 𝑜𝑓 𝑠𝑜𝑛𝑔𝑠 📝🎶
@@ -251,7 +252,7 @@ async def telegraph_upload(bot, update):
     )
 
 
-@Client.on_message(filters.command(['song', 'mp3']) & filters.private)
+@app.on_message(filters.command(['song', 'mp3']) & filters.private)
 async def song(client, message):
     user_id = message.from_user.id 
     user_name = message.from_user.first_name 
@@ -321,7 +322,7 @@ def get_text(message: Message) -> [None,str]:
         return None
 
 
-@Client.on_message(filters.command(["video", "mp4"]))
+@app.on_message(filters.command(["video", "mp4"]))
 async def vsong(client, message: Message):
     urlissed = get_text(message)
     pablo = await client.send_message(message.chat.id, f"**𝙵𝙸𝙽𝙳𝙸𝙽𝙶 𝚈𝙾𝚄𝚁 𝚅𝙸𝙳𝙴𝙾** `{urlissed}`")
