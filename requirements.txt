@@ -14,7 +14,7 @@ lyricsgenius
 jsons
 opencv-contrib-python-headless
 
-#---ytdl----#
+#--ytdl--#
 youtube-search-python
 youtube-search
 yt-dlp==2023.2.17
