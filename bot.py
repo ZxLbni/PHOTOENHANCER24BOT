@@ -802,19 +802,24 @@ async def collage_command(client, message):
 async def collect_photos(client, message):
     user_id = message.from_user.id
     if user_id in photo_dict:
-        photo_path = await message.download()
-        photo_dict[user_id].append(photo_path)
-        
-        photo_count = len(photo_dict[user_id])
-        if photo_count < 10:
-            await message.reply_text(f"Received {photo_count} photo(s). Please send {10 - photo_count} more photo(s).")
-        if photo_count == 10:
-            await message.reply_text(
-                "You have uploaded 10 photos. Click the button below to create the collage.",
-                reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton("Create Collage", callback_data="create_collage")]]
-                )
-            )
+        try:
+            photo_path = await message.download()
+            if photo_path:
+                photo_dict[user_id].append(photo_path)
+                photo_count = len(photo_dict[user_id])
+                if photo_count < 10:
+                    await message.reply_text(f"Received {photo_count} photo(s). Please send {10 - photo_count} more photo(s).")
+                elif photo_count == 10:
+                    await message.reply_text(
+                        "You have uploaded 10 photos. Click the button below to create the collage.",
+                        reply_markup=InlineKeyboardMarkup(
+                            [[InlineKeyboardButton("Create Collage", callback_data="create_collage")]]
+                        )
+                    )
+            else:
+                await message.reply_text("Failed to download the photo. Please try again.")
+        except Exception as e:
+            await message.reply_text(f"An error occurred: {e}")
 
 @app.on_callback_query(filters.regex("create_collage"))
 async def create_collage_callback(client, callback_query):
@@ -822,21 +827,25 @@ async def create_collage_callback(client, callback_query):
     
     if user_id in photo_dict and len(photo_dict[user_id]) == 10:
         photos = photo_dict[user_id]
-        collage = create_collage(photos)
-        collage_path = f"collage_{user_id}.png"
-        collage.save(collage_path)
-        
-        await client.send_photo(
-            chat_id=callback_query.message.chat.id,
-            photo=collage_path,
-            caption="Here's your collage!"
-        )
-        os.remove(collage_path)
-        
-        # Clear the user's photo list
-        for photo in photo_dict[user_id]:
-            os.remove(photo)
-        del photo_dict[user_id]
+        try:
+            collage = create_collage(photos)
+            collage_path = f"collage_{user_id}.png"
+            collage.save(collage_path)
+            
+            await client.send_photo(
+                chat_id=callback_query.message.chat.id,
+                photo=collage_path,
+                caption="Here's your collage!"
+            )
+            os.remove(collage_path)
+        except Exception as e:
+            await callback_query.message.reply_text(f"Failed to create collage: {e}")
+        finally:
+            # Clear the user's photo list and delete uploaded photos
+            for photo in photo_dict[user_id]:
+                if os.path.exists(photo):
+                    os.remove(photo)
+            del photo_dict[user_id]
     else:
         await callback_query.answer("You need to upload exactly 10 photos.", show_alert=True)
 
@@ -861,6 +870,7 @@ def create_collage(image_paths, collage_width=1000):
             y_offset += img_height
     
     return collage
+
       
 # Run the bot
 app.run()
