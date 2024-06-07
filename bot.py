@@ -52,14 +52,14 @@ async def start(client, message):
             # Check if the user is banned
             user = await client.get_chat_member(FSUB_CHANNEL, message.chat.id)
             if user.status == "kicked":
-                await message.reply_text("Sᴏʀʀʏ, Yᴏᴜ ᴀʀᴇ **B ᴀ ɴ ɴ ᴇ ᴅ**")
+                await message.reply_text("Sorry, You are **Banned**")
                 return
         except UserNotParticipant:
             # If the user is not a participant, prompt them to join
             await message.reply_text(
-                text="**❤️ Pʟᴇᴀꜱᴇ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Bᴇғᴏʀᴇ Uꜱɪɴɢ Mᴇ ❤️**",
+                text="**❤️ Please Join My Update Channel Before Using Me ❤️**",
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton(text="➕ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ ➕", url=f"https://t.me/{FSUB_CHANNEL}")]
+                    [InlineKeyboardButton(text="➕ Join My Updates Channel ➕", url=f"https://t.me/{FSUB_CHANNEL}")]
                 ])
             )
             return
@@ -71,13 +71,13 @@ async def start(client, message):
                 caption=start_text,
                 reply_markup=InlineKeyboardMarkup(
                     [
-                        [InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ 🧑🏻‍💻", url=f"https://t.me/Sunrises_24"),
-                         InlineKeyboardButton("Uᴘᴅᴀᴛᴇꜱ 📢", url="https://t.me/Sunrises24BotUpdates")],
+                        [InlineKeyboardButton("Developer 🧑🏻‍💻", url="https://t.me/Sunrises_24"),
+                         InlineKeyboardButton("Updates 📢", url="https://t.me/Sunrises24BotUpdates")],
                         [InlineKeyboardButton("Support ❤️‍🔥", url="https://t.me/Sunrises24botSupport"),
-                         InlineKeyboardButton("Cʜᴀɴɴᴇʟ 🎞️", url="https://t.me/sunriseseditsoffical6")]
+                         InlineKeyboardButton("Channel 🎞️", url="https://t.me/sunriseseditsoffical6")]
                     ]
                 ),
-                reply_to_message_id=getattr(message, "message_id", None)
+                reply_to_message_id=message.message_id
             )
             return
                           
