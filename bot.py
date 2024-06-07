@@ -45,7 +45,6 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
-
 @app.on_message(filters.command("start"))
 async def start(client, message):       
     if FSUB_CHANNEL:
@@ -53,14 +52,14 @@ async def start(client, message):
             # Check if the user is banned
             user = await client.get_chat_member(FSUB_CHANNEL, message.chat.id)
             if user.status == "kicked":
-                await message.reply_text("Sorry, You are **Banned**")
+                await message.reply_text("Sᴏʀʀʏ, Yᴏᴜ ᴀʀᴇ **B ᴀ ɴ ɴ ᴇ ᴅ**")
                 return
         except UserNotParticipant:
             # If the user is not a participant, prompt them to join
             await message.reply_text(
-                text="**❤️ Please Join My Update Channel Before Using Me ❤️**",
+                text="**❤️ Pʟᴇᴀꜱᴇ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Bᴇғᴏʀᴇ Uꜱɪɴɢ Mᴇ ❤️**",
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton(text="➕ Join My Updates Channel ➕", url=f"https://t.me/{FSUB_CHANNEL}")]
+                    [InlineKeyboardButton(text="➕ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ ➕", url=f"https://t.me/{FSUB_CHANNEL}")]
                 ])
             )
             return
@@ -72,16 +71,16 @@ async def start(client, message):
                 caption=start_text,
                 reply_markup=InlineKeyboardMarkup(
                     [
-                        [InlineKeyboardButton("Developer 🧑🏻‍💻", url="https://t.me/Sunrises_24"),
-                         InlineKeyboardButton("Updates 📢", url="https://t.me/Sunrises24BotUpdates")],
+                        [InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ 🧑🏻‍💻", url=f"https://t.me/Sunrises_24"),
+                         InlineKeyboardButton("Uᴘᴅᴀᴛᴇꜱ 📢", url="https://t.me/Sunrises24BotUpdates")],
                         [InlineKeyboardButton("Support ❤️‍🔥", url="https://t.me/Sunrises24botSupport"),
-                         InlineKeyboardButton("Channel 🎞️", url="https://t.me/sunriseseditsoffical6")]
+                         InlineKeyboardButton("Cʜᴀɴɴᴇʟ 🎞️", url="https://t.me/sunriseseditsoffical6")]
                     ]
-                )
+                ),
+                reply_to_message_id=getattr(message, "message_id", None)
             )
             return
 
-                          
 print("Bot Started!🦋 © t.me/Sunrises_24")
 
 # Function to handle /help command
