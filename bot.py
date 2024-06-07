@@ -45,6 +45,7 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
+
 @app.on_message(filters.command("start"))
 async def start(client, message):       
     if FSUB_CHANNEL:
@@ -76,11 +77,9 @@ async def start(client, message):
                         [InlineKeyboardButton("Support ❤️‍🔥", url="https://t.me/Sunrises24botSupport"),
                          InlineKeyboardButton("Channel 🎞️", url="https://t.me/sunriseseditsoffical6")]
                     ]
-                ),
-                reply_to_message_id=message.message_id
+                )
             )
             return
-
                           
 print("Bot Started!🦋 © t.me/Sunrises_24")
 
