@@ -956,7 +956,7 @@ async def media_info(client, message):
            user_dp = await client.download_media(message=ff.photo.big_file_id)
            await message.reply_photo(
                photo=user_dp,
-               caption=txt.INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
+               caption=INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
                reply_markup=InlineKeyboardMarkup(buttons),
                quote=True,
                parse_mode=enums.ParseMode.HTML,
@@ -966,7 +966,7 @@ async def media_info(client, message):
            await sh.delete()
         else:  
            await message.reply_text(
-               text=txt.INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
+               text=INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
                reply_markup=InlineKeyboardMarkup(buttons),
                quote=True,
                parse_mode=enums.ParseMode.HTML,
