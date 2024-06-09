@@ -1,5 +1,9 @@
-from bot import DATABASE_URL, DATABASE_NAME
+
 import motor.motor_asyncio, datetime
+
+DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASE_NAME = os.environ.get("DATABASE_NAME")
+
 
 
 class Database:
