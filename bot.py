@@ -945,7 +945,7 @@ async def media_info(client, message):
         ]]       
         sh = await message.reply("please wait....")
         if ff.photo:
-           user_dp = await message.download_media(message=ff.photo.big_file_id)
+           user_dp = await client.download_media(message=ff.photo.big_file_id)
            await message.reply_photo(
                photo=user_dp,
                caption=txt.INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
