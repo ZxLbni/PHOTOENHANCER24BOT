@@ -890,7 +890,7 @@ async def get_stats(client, message):
     await mr.edit( text=f"🔍 TOTAL USER'S = `{total_users}`")
 
 @app.on_message(filters.command("broadcast") & filters.user(ADMIN) & filters.reply)
-async def broadcast_handler(bot: client, m: message):
+async def broadcast_handler(client, message):
     all_users = await db.get_all_users()
     broadcast_msg = message.reply_to_message
     sts_msg = await message.reply_text("broadcast started !") 
