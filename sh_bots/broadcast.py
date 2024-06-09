@@ -8,7 +8,7 @@ from pyrogram.types import Message
 from pyrogram import Client, filters
 
 @app.on_message(filters.command("users") & filters.user(ADMIN))
-async def get_stats(bot, message):
+async def get_stats(client, message):
     mr = await message.reply('**𝙰𝙲𝙲𝙴𝚂𝚂𝙸𝙽𝙶 𝙳𝙴𝚃𝙰𝙸𝙻𝚂.....**')
     total_users = await db.total_users_count()
     await mr.edit( text=f"🔍 TOTAL USER'S = `{total_users}`")
