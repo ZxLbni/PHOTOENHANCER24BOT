@@ -22,16 +22,13 @@ from sh_bots.database import db
 import pyrogram, random
 from pyrogram import enums
 
-INFO_TXT = """<i>
-<u>🧑🏻‍💻YOUR DETAILS</u>
-
-○ ID : <code>{id}</code>
-○ DC : <code>{dc}</code>
-○ First Name : <code>{n}<code>
-○ UserName : @{u}
-○ link : <code>https://t.me/{u}</code>
-
-Thank You For Using Me❣️</i>"""
+INFO_TXT = """
+**User Info:**
+ID: `{id}`
+DC: `{dc}`
+First Name: `{n}`
+Username: `@{u}`
+"""
     
 # Store the photos temporarily in a dictionary
 photo_dict = {}
@@ -923,55 +920,42 @@ async def broadcast_handler(client, message):
  
 #info text                                              
 @app.on_message(filters.command(["id", "info"]))
-async def media_info(client, message):     
-    ff = message.from_user
-    md = message.reply_to_message
-    if md:
-       try:
-          if md.photo:
-              await message.reply_text(text=f"**your photo id is **\n\n`{md.photo.file_id}`") 
-          if md.sticker:
-              await message.reply_text(text=f"**your sticker id is **\n\n`{md.sticker.file_id}`")
-          if md.video:
-              await message.reply_text(text=f"**your video id is **\n\n`{md.video.file_id}`")
-          if md.document:
-              await message.reply_text(text=f"**your document id is **\n\n`{md.document.file_id}`")
-          if md.audio:
-              await message.reply_text(text=f"**your audio id is **\n\n`{md.audio.file_id}`")
-          if md.text:
-              await message.reply_text("**hey man please reply with ( photo, video, sticker, documents, etc...) Only media **")  
-          else:
-              await message.reply_text("[404] Error..🤖")                                                                                      
-       except Exception as e:
-          print(e)
-          await message.reply_text(f"[404] Error {e}")
-                                        
-    if not md:
+async def media_info(client, message):
+    try:
+        user_id = int(message.command[1])
+        user = await client.get_users(user_id)
+
         buttons = [[
             InlineKeyboardButton("✨️ Support", url="https://t.me/Sunrises24botsupport"),
             InlineKeyboardButton("📢 Updates", url="https://t.me/Sunrises24botupdates")
-        ]]       
-        sh = await message.reply("please wait....")
-        if ff.photo:
-           user_dp = await client.download_media(message=ff.photo.big_file_id)
-           await message.reply_photo(
-               photo=user_dp,
-               caption=INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
-               reply_markup=InlineKeyboardMarkup(buttons),
-               quote=True,
-               parse_mode=enums.ParseMode.HTML,
-               disable_notification=True
-           )          
-           os.remove(user_dp)
-           await sh.delete()
-        else:  
-           await message.reply_text(
-               text=INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
-               reply_markup=InlineKeyboardMarkup(buttons),
-               quote=True,
-               parse_mode=enums.ParseMode.HTML,
-               disable_notification=True
+        ]]
+        
+        if user.photo:
+            user_dp = await client.download_media(message=user.photo.big_file_id)
+            await message.reply_photo(
+                photo=user_dp,
+                caption=INFO_TXT.format(id=user.id, dc=user.dc_id, n=user.first_name, u=user.username),
+                reply_markup=InlineKeyboardMarkup(buttons),
+                quote=True,
+                parse_mode=enums.ParseMode.HTML,
+                disable_notification=True
             )
+            os.remove(user_dp)
+        else:
+            await message.reply_text(
+                text=INFO_TXT.format(id=user.id, dc=user.dc_id, n=user.first_name, u=user.username),
+                reply_markup=InlineKeyboardMarkup(buttons),
+                quote=True,
+                parse_mode=enums.ParseMode.HTML,
+                disable_notification=True
+            )
+    except IndexError:
+        await message.reply_text("Please provide a user ID.\nUsage: `/info <user_id>`")
+    except Exception as e:
+        print(e)
+        await message.reply_text(f"[404] Error: {e}")
+
+
                      
 
 # Run the bot
