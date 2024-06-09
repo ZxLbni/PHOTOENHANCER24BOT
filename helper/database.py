@@ -1,4 +1,4 @@
-from config import DATABASE_URL, DATABASE_NAME
+from bot import DATABASE_URL, DATABASE_NAME
 import motor.motor_asyncio, datetime
 
 
