@@ -5,7 +5,7 @@ import requests, wget, math
 from pyrogram.types import (InlineKeyboardButton,  InlineKeyboardMarkup)
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from PIL import Image, ImageEnhance, ImageOps
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from sh_bots.font_list import Fonts
 from pyrogram.types import *
 from telegraph import upload_file
@@ -17,20 +17,15 @@ from pyrogram.types import Message
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from yt_dlp import YoutubeDL
-import datetime
-from datetime import timedelta
-from sh_bots.database import db
-import pyrogram, random
-from pyrogram import enums
 
 INFO_TXT = """
-**User Info:**
-ID: `{id}`
-DC: `{dc}`
-First Name: `{n}`
-Username: `@{u}`
+🕵🏻 **User Info:**
+🆔 **ID**: `{id}`
+🌐 **DC**: `{dc}` 
+👤 **First Name**: `{n}`
+🔘 **Username**: `@{u}`
 """
-    
+  
 # Store the photos temporarily in a dictionary
 photo_dict = {}
 
@@ -887,51 +882,7 @@ def create_collage(image_paths, collage_width=1000):
     
     return collage
 
-
-#bot
-@app.on_message(filters.command("users") & filters.user(ADMIN))
-async def get_stats(client, message):
-    mr = await message.reply('**𝙰𝙲𝙲𝙴𝚂𝚂𝙸𝙽𝙶 𝙳𝙴𝚃𝙰𝙸𝙻𝚂.....**')
-    try:
-        total_users = await db.total_users_count()
-        await mr.edit(text=f"🔍 TOTAL USER'S = `{total_users}`")
-    except Exception as e:
-        await mr.edit(text=f"Error: {str(e)}")
-
-@app.on_message(filters.command("broadcast") & filters.user(ADMIN) & filters.reply)
-async def broadcast_handler(client, message):
-    all_users = await db.get_all_users()
-    broadcast_msg = message.reply_to_message
-    sts_msg = await message.reply_text("broadcast started !") 
-    done = 0
-    failed = 0
-    success = 0
-    start_time = time.time()
-    
-    try:
-        total_users = await db.total_users_count()
-        async for user in all_users:
-            try:
-                sts = await send_msg(user['id'], broadcast_msg)
-                if sts == 200:
-                    success += 1
-                else:
-                    failed += 1
-                    if sts == 400:
-                        await db.delete_user(user['id'])
-            except Exception as e:
-                failed += 1
-                print(f"Error sending message to {user['id']}: {str(e)}")
-                
-            done += 1
-            if not done % 20:
-                await sts_msg.edit(f"Broadcast in progress:\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nFailed: {failed}")
-
-        completed_in = timedelta(seconds=int(time.time() - start_time))
-        await sts_msg.edit(f"Broadcast Completed:\nCompleted in `{completed_in}`.\n\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nFailed: {failed}")
-    except Exception as e:
-        await sts_msg.edit(text=f"Error: {str(e)}")
-        
+     
 #info text                                              
 @app.on_message(filters.command(["id", "info"]))
 async def media_info(client, message):
@@ -960,31 +911,26 @@ async def media_info(client, message):
             user_dp = await client.download_media(message=user.photo.big_file_id)
             await message.reply_photo(
                 photo=user_dp,
-                caption=INFO_TXT.format(id=user.id, dc=user.dc_id, n=user.first_name, u=user.username),
+                caption=INFO_TXT.format(id=user.id, dc=user.dc_id, n=user.first_name, u=user.username or 'N/A'),
                 reply_markup=InlineKeyboardMarkup(buttons),
                 quote=True,
-                parse_mode=enums.ParseMode.HTML,
-                disable_notification=True
+                parse_mode=enums.ParseMode.MARKDOWN  # Use MARKDOWN for formatting
             )
             os.remove(user_dp)
         else:
             await message.reply_text(
-                text=INFO_TXT.format(id=user.id, dc=user.dc_id, n=user.first_name, u=user.username),
+                text=INFO_TXT.format(id=user.id, dc=user.dc_id, n=user.first_name, u=user.username or 'N/A'),
                 reply_markup=InlineKeyboardMarkup(buttons),
                 quote=True,
-                parse_mode=enums.ParseMode.HTML,
-                disable_notification=True
+                parse_mode=enums.ParseMode.MARKDOWN  # Use MARKDOWN for formatting
             )
         await sh.delete()
 
+    except IndexError:
+        await message.reply_text("Please provide a user ID.\nUsage: `/info <user_id>`")
     except Exception as e:
         print(e)
         await message.reply_text(f"[404] Error: {e}")
-
-
-
-
-                     
 
 # Run the bot
 app.run()
