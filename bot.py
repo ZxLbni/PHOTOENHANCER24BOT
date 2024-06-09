@@ -915,8 +915,7 @@ async def broadcast_handler(client, message):
  
 #info text                                              
 @app.on_message(filters.command(["id", "info"]))
-async def media_info(client, message): 
-    message = m
+async def media_info(client, message):     
     ff = message.from_user
     md = message.reply_to_message
     if md:
@@ -944,10 +943,10 @@ async def media_info(client, message):
             InlineKeyboardButton("✨️ Support", url="https://t.me/Sunrises24botsupport"),
             InlineKeyboardButton("📢 Updates", url="https://t.me/Sunrises24botupdates")
         ]]       
-        sh = await m.reply("please wait....")
+        sh = await message.reply("please wait....")
         if ff.photo:
            user_dp = await bot.download_media(message=ff.photo.big_file_id)
-           await m.reply_photo(
+           await message.reply_photo(
                photo=user_dp,
                caption=txt.INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
                reply_markup=InlineKeyboardMarkup(buttons),
@@ -958,7 +957,7 @@ async def media_info(client, message):
            os.remove(user_dp)
            await sh.delete()
         else:  
-           await m.reply_text(
+           await message.reply_text(
                text=txt.INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
                reply_markup=InlineKeyboardMarkup(buttons),
                quote=True,
