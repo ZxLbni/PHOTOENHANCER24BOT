@@ -1,52 +1,57 @@
-from pyrogram import filters
-from pyrogram import Client, enums
-from pyrogram.file_id import FileId
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+import pyrogram, asyncio, random, time, os
+from pyrogram import Client, filters, enums
+from pyrogram.types import *
 
-
-@app.on_message(filters.private & filters.forwarded)
-async def info(bot, msg):
-    if msg.forward_from:
-        text = "<u>𝐅𝐨𝐫𝐰𝐚𝐫𝐝 𝐈𝐧𝐟𝐨𝐫𝐦𝐚𝐭𝐢𝐨𝐧 👀</u> \n\n"
-        if msg.forward_from["is_bot"]:
-            text += "<u>🤖 𝐁𝐨𝐭 𝐈𝐧𝐟𝐨</u>"
-        else:
-            text += "<u>👤𝐔𝐬𝐞𝐫 𝐈𝐧𝐟𝐨</u>"
-        text += f'\n\n👨‍💼 𝐍𝐚𝐦𝐞 : {msg.forward_from["first_name"]}'
-        if msg.forward_from["username"]:
-
-            text += f'\n\n🔗 𝐔𝐬𝐞𝐫𝐍𝐚𝐦𝐞 : @{msg.forward_from["username"]} \n\n🆔 ID : <code>{msg.forward_from["id"]}</code>\n\n💫DC : {msg.forward_from["dc_id"]}'           
-        else:
-            text += f'\n\n🆔 𝐈𝐃 : `{msg.forward_from["id"]}`\n\n\n\n💫DC : {msg.forward_from["dc_id"]}'
-
-        await msg.reply(text, quote=True)
-    else:
-        hidden = msg.forward_sender_name
-        if hidden:
-            await msg.reply(
-                f"❌️𝐄𝐫𝐫𝐨𝐫 <b><i>{hidden}</i></b> ❌️𝐄𝐫𝐫𝐨𝐫",
-                quote=True,
+                                              
+@Client.on_message(filters.command(["id", "info"]))
+async def media_info(bot, m): 
+    message = m
+    ff = m.from_user
+    md = m.reply_to_message
+    if md:
+       try:
+          if md.photo:
+              await m.reply_text(text=f"**your photo id is **\n\n`{md.photo.file_id}`") 
+          if md.sticker:
+              await m.reply_text(text=f"**your sticker id is **\n\n`{md.sticker.file_id}`")
+          if md.video:
+              await m.reply_text(text=f"**your video id is **\n\n`{md.video.file_id}`")
+          if md.document:
+              await m.reply_text(text=f"**your document id is **\n\n`{md.document.file_id}`")
+          if md.audio:
+              await m.reply_text(text=f"**your audio id is **\n\n`{md.audio.file_id}`")
+          if md.text:
+              await m.reply_text("**hey man please reply with ( photo, video, sticker, documents, etc...) Only media **")  
+          else:
+              await m.reply_text("[404] Error..🤖")                                                                                      
+       except Exception as e:
+          print(e)
+          await m.reply_text(f"[404] Error {e}")
+                                        
+    if not md:
+        buttons = [[
+            InlineKeyboardButton("✨️ Support", url="https://t.me/Sunrises24botsupport"),
+            InlineKeyboardButton("📢 Updates", url="https://t.me/Sunrises24botupdates")
+        ]]       
+        sh = await m.reply("please wait....")
+        if ff.photo:
+           user_dp = await bot.download_media(message=ff.photo.big_file_id)
+           await m.reply_photo(
+               photo=user_dp,
+               caption=txt.INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
+               reply_markup=InlineKeyboardMarkup(buttons),
+               quote=True,
+               parse_mode=enums.ParseMode.HTML,
+               disable_notification=True
+           )          
+           os.remove(user_dp)
+           await sh.delete()
+        else:  
+           await m.reply_text(
+               text=txt.INFO_TXT.format(id=ff.id, dc=ff.dc_id, n=ff.first_name, u=ff.username),
+               reply_markup=InlineKeyboardMarkup(buttons),
+               quote=True,
+               parse_mode=enums.ParseMode.HTML,
+               disable_notification=True
             )
-        else:
-            text = f"<u>𝐅𝐨𝐫𝐰𝐚𝐫𝐝 𝐈𝐧𝐟𝐨𝐫𝐦𝐚𝐭𝐢𝐨𝐧 👀</u>.\n\n"
-            if msg.forward_from_chat["type"] == enums.ChatType.CHANNEL:
-                text += "<u>📢 𝐂𝐡𝐚𝐧𝐧𝐞𝐥</u>"
-            if msg.forward_from_chat["type"] == enums.ChatType.GROUP:
-                text += "<u>🗣️ 𝐆𝐫𝐨𝐮𝐩</u>"
-            text += f'\n\n📃 𝐍𝐚𝐦𝐞 {msg.forward_from_chat["title"]}'
-            if msg.forward_from_chat["username"]:
-
-                text += f'\n\n➡️ 𝐅𝐫𝐨𝐦 : @{msg.forward_from_chat["username"]}'
-                text += f'\n\n🆔 𝐈𝐃 : `{msg.forward_from_chat["id"]}`\n\n💫DC : {msg.forward_from_chat["dc_id"]}'
-            else:
-                text += f'\n\n🆔 𝐈𝐃 `{msg.forward_from_chat["id"]}`\n\n{msg.forward_from_chat["dc_id"]}'                                           
-
-            await msg.reply(text, quote=True)
-
-
-
-
-
-
-
-
+            
