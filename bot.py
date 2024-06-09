@@ -922,8 +922,20 @@ async def broadcast_handler(client, message):
 @app.on_message(filters.command(["id", "info"]))
 async def media_info(client, message):
     try:
+        # Check if a user ID is provided
+        if len(message.command) < 2:
+            await message.reply_text("Please provide a user ID.\nUsage: `/info <user_id>`")
+            return
+
         user_id = int(message.command[1])
-        user = await client.get_users(user_id)
+        sh = await message.reply("Please wait...")
+
+        try:
+            user = await client.get_users(user_id)
+        except Exception as e:
+            await sh.delete()
+            await message.reply_text(f"Error fetching user details: {e}")
+            return
 
         buttons = [[
             InlineKeyboardButton("✨️ Support", url="https://t.me/Sunrises24botsupport"),
@@ -949,11 +961,13 @@ async def media_info(client, message):
                 parse_mode=enums.ParseMode.HTML,
                 disable_notification=True
             )
-    except IndexError:
-        await message.reply_text("Please provide a user ID.\nUsage: `/info <user_id>`")
+        await sh.delete()
+
     except Exception as e:
         print(e)
         await message.reply_text(f"[404] Error: {e}")
+
+
 
 
                      
