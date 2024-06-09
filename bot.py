@@ -889,7 +889,7 @@ async def media_info(client, message):
     try:
         # Check if a user ID is provided
         if len(message.command) < 2:
-            await message.reply_text("Please provide a user ID.\nUsage: `/info <user_id>`")
+            await message.reply_text("Please provide a user ID.\nUsage: `/info <telegram_user_id>`")
             return
 
         user_id = int(message.command[1])
@@ -927,7 +927,7 @@ async def media_info(client, message):
         await sh.delete()
 
     except IndexError:
-        await message.reply_text("Please provide a user ID.\nUsage: `/info <user_id>`")
+        await message.reply_text("Please provide a user ID.\nUsage: `/info <telegram_user_id>`")
     except Exception as e:
         print(e)
         await message.reply_text(f"[404] Error: {e}")
