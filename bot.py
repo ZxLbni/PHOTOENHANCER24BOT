@@ -18,7 +18,7 @@ from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from yt_dlp import YoutubeDL
 import datetime
-from helper.database import db
+from sh_bots.database.py import db
 import pyrogram, random
 from pyrogram import enums
 
