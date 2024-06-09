@@ -2,7 +2,7 @@ import pyrogram, asyncio, random, time, os
 from pyrogram import Client, filters, enums
 from pyrogram.types import *
 
-INFO = """• Send /id or info to get your telegram id & info 💝
+INFO = """• Send /id or info to get your telegram id & info 💝"""
 
                                               
 @app.on_message(filters.command(["id", "info"]))
