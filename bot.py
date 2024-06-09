@@ -18,6 +18,7 @@ from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from yt_dlp import YoutubeDL
 import datetime
+from datetime import timedelta
 from sh_bots.database import db
 import pyrogram, random
 from pyrogram import enums
@@ -891,8 +892,11 @@ def create_collage(image_paths, collage_width=1000):
 @app.on_message(filters.command("users") & filters.user(ADMIN))
 async def get_stats(client, message):
     mr = await message.reply('**𝙰𝙲𝙲𝙴𝚂𝚂𝙸𝙽𝙶 𝙳𝙴𝚃𝙰𝙸𝙻𝚂.....**')
-    total_users = await db.total_users_count()
-    await mr.edit( text=f"🔍 TOTAL USER'S = `{total_users}`")
+    try:
+        total_users = await db.total_users_count()
+        await mr.edit(text=f"🔍 TOTAL USER'S = `{total_users}`")
+    except Exception as e:
+        await mr.edit(text=f"Error: {str(e)}")
 
 @app.on_message(filters.command("broadcast") & filters.user(ADMIN) & filters.reply)
 async def broadcast_handler(client, message):
@@ -903,21 +907,31 @@ async def broadcast_handler(client, message):
     failed = 0
     success = 0
     start_time = time.time()
-    total_users = await db.total_users_count()
-    async for user in all_users:
-        sts = await send_msg(user['id'], broadcast_msg)
-        if sts == 200:
-           success += 1
-        else:
-           failed += 1
-        if sts == 400:
-           await db.delete_user(user['id'])
-        done += 1
-        if not done % 20:
-           await sts_msg.edit(f"Broadcast in progress:\nnTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nFailed: {failed}")
-    completed_in = datetime.timedelta(seconds=int(time.time() - start_time))
-    await sts_msg.edit(f"Broadcast Completed:\nCompleted in `{completed_in}`.\n\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nFailed: {failed}")
- 
+    
+    try:
+        total_users = await db.total_users_count()
+        async for user in all_users:
+            try:
+                sts = await send_msg(user['id'], broadcast_msg)
+                if sts == 200:
+                    success += 1
+                else:
+                    failed += 1
+                    if sts == 400:
+                        await db.delete_user(user['id'])
+            except Exception as e:
+                failed += 1
+                print(f"Error sending message to {user['id']}: {str(e)}")
+                
+            done += 1
+            if not done % 20:
+                await sts_msg.edit(f"Broadcast in progress:\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nFailed: {failed}")
+
+        completed_in = timedelta(seconds=int(time.time() - start_time))
+        await sts_msg.edit(f"Broadcast Completed:\nCompleted in `{completed_in}`.\n\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nFailed: {failed}")
+    except Exception as e:
+        await sts_msg.edit(text=f"Error: {str(e)}")
+        
 #info text                                              
 @app.on_message(filters.command(["id", "info"]))
 async def media_info(client, message):
