@@ -29,6 +29,8 @@ API_HASH = os.environ.get("API_HASH")
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 RemoveBG_API = os.environ.get("RemoveBG_API")
 FSUB_CHANNEL = os.environ.get("FSUB_CHANNEL")
+DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASE_NAME = os.environ.get("DATABASE_NAME")
 SUNRISES_PIC = os.environ.get("SUNRISES_PIC") #Telegraph link Start Pic 
 
 API = "https://apis.xditya.me/lyrics?song="
