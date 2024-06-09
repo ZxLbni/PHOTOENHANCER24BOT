@@ -22,9 +22,17 @@ from sh_bots.database import db
 import pyrogram, random
 from pyrogram import enums
 
-class txt:
-    INFO = """• Send /id or info to get your telegram id & info 💝"""
+INFO_TXT = """<i>
+<u>🧑🏻‍💻YOUR DETAILS</u>
 
+○ ID : <code>{id}</code>
+○ DC : <code>{dc}</code>
+○ First Name : <code>{n}<code>
+○ UserName : @{u}
+○ link : <code>https://t.me/{u}</code>
+
+Thank You For Using Me❣️</i>"""
+    
 # Store the photos temporarily in a dictionary
 photo_dict = {}
 
