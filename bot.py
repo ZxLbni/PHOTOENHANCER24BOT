@@ -35,11 +35,8 @@ photo_dict = {}
 API_ID = int(os.environ.get("API_ID"))
 API_HASH = os.environ.get("API_HASH")
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
-ADMIN = os.environ.get("ADMIN")
 RemoveBG_API = os.environ.get("RemoveBG_API")
 FSUB_CHANNEL = os.environ.get("FSUB_CHANNEL")
-DATABASE_URL = os.environ.get("DATABASE_URL")
-DATABASE_NAME = os.environ.get("DATABASE_NAME")
 SUNRISES_PIC = os.environ.get("SUNRISES_PIC") #Telegraph link Start Pic 
 
 API = "https://apis.xditya.me/lyrics?song="
@@ -115,6 +112,9 @@ Hᴇʀᴇ Is Tʜᴇ Hᴇʟᴘ Fᴏʀ Mʏ Cᴏᴍᴍᴀɴᴅs.
 /removebgwhite -  𝑇𝑜 𝑟𝑒𝑚𝑜𝑣𝑒 𝑡ℎ𝑒 𝑏𝑎𝑐𝑘𝑔𝑟𝑜𝑢𝑛𝑑 𝑓𝑟𝑜𝑚 𝑎𝑛 𝑊ℎ𝑖𝑡𝑒 𝑖𝑚𝑎𝑔𝑒
 /telegraph - 𝑇𝑜 𝑔𝑒𝑡 𝑇𝑒𝑙𝑒𝑔𝑟𝑎𝑝ℎ 𝐿𝑖𝑛𝑘 🔗
 /about - 𝐿𝑒𝑎𝑟𝑛 𝑚𝑜𝑟𝑒 𝑎𝑏𝑜𝑢𝑡 𝑡ℎ𝑖𝑠 𝑏𝑜𝑡
+
+◉Iᴅ Oʀ Iɴғᴏ
+/info - 𝑇𝑜 𝐾𝑛𝑜𝑤 𝑡ℎ𝑒 𝑈𝑠𝑒𝑟 𝐼𝑛𝑓𝑜 𝐵𝑦 𝑇𝑒𝑙𝑒𝑔𝑟𝑎𝑚 🆔
 
 ◉ ғᴏɴᴛ 
 /font - 𝑐𝑜𝑚𝑚𝑎𝑛𝑑 𝑤𝑖𝑡ℎ 𝑡𝑒𝑥𝑡 𝑡𝑜 𝐹𝑜𝑛𝑡 🔠
