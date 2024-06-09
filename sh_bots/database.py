@@ -1,4 +1,4 @@
-
+import os
 import motor.motor_asyncio, datetime
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
