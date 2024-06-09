@@ -13,7 +13,7 @@ lexica-api
 lyricsgenius
 jsons
 opencv-contrib-python-headless
-motor
+
 
 #--ytdl--#
 youtube-search-python
