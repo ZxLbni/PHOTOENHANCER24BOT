@@ -3,7 +3,7 @@ pyrogram
 python-telegram-bot
 Pillow
 telegraph==2.2.0
-requests
+requests==2.25.1
 httpx
 libcst
 wget
