@@ -4,3 +4,9 @@ services:
     env: node
     buildCommand: 'npm install'
     startCommand: 'node worker.js'
+
+  - type: worker
+    name: PHOTOENHANCER24BOT
+    env: python
+    buildCommand: 'pip install -r requirements.txt'
+    startCommand: 'python bot.py'
