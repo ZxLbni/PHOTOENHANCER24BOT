@@ -1,0 +1,15 @@
+services:
+  - type: web
+    plan: free
+    name: PHOTOENHANCER24BOT
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    repo: https://github.com/Aluval/PHOTOENHANCER24BOT.git
+    branch: SH24BOTS
+    autoDeploy: true
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+
+      
