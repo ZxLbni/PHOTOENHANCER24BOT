@@ -21,6 +21,8 @@ Press Below Button to Deploy!
 
 * `API_HASH` - From my.telegram.org
 
+* `ADMIN` - OWNER ID FROM GET ROSE
+
 * `RemoveBG_API` - From https://www.remove.bg/dashboard#api-key
 
 * `FSUB_CHANNEL` - your Force Sub channel or updates channel only Username
@@ -34,6 +36,7 @@ start - 𝐵𝑜𝑡 𝑎𝑙𝑖𝑣𝑒 𝑜𝑟 𝑁𝑜𝑡 🚶🏻
 help - 𝐺𝑒𝑡 𝑑𝑒𝑡𝑎𝑖𝑙𝑒𝑑 𝑜𝑓 𝑏𝑜𝑡 𝑐𝑜𝑚𝑚𝑎𝑛𝑑𝑠 📝
 about - 𝐿𝑒𝑎𝑟𝑛 𝑚𝑜𝑟𝑒 𝑎𝑏𝑜𝑢𝑡 𝑡ℎ𝑖𝑠 𝑏𝑜𝑡 🧑🏻‍💻
 ping - 𝑇𝑜 𝐶ℎ𝑒𝑐𝑘 𝑇ℎ𝑒 𝑃𝑖𝑛𝑔 𝑂𝑓 𝑇ℎ𝑒 𝐵𝑜𝑡 📍
+giveaway - 𝐺𝑖𝑣𝑒𝑎𝑤𝑎𝑦 𝐼𝑛 𝐺𝑟𝑜𝑢𝑝 𝑂𝑛𝑙𝑦 [𝐴𝐷𝑀𝐼𝑁]🌟
 collage - 𝑆𝑒𝑛𝑑 10 𝑃ℎ𝑜𝑡𝑜𝑠 𝑇𝑜 𝑚𝑎𝑘𝑒 𝑐𝑜𝑙𝑙𝑎𝑔𝑒 𝑖𝑛 𝑐𝑜𝑙𝑢𝑚𝑛𝑠🖼️
 portrait - 𝐶𝑜𝑛𝑣𝑒𝑟𝑡 𝑖𝑚𝑎𝑔𝑒 𝑡𝑜 𝑃𝑜𝑟𝑡𝑟𝑎𝑖𝑡✨
 grayscale - 𝐶𝑜𝑛𝑣𝑒𝑟𝑡 𝑖𝑚𝑎𝑔𝑒 𝑡𝑜 𝑔𝑟𝑎𝑦𝑠𝑐𝑎𝑙𝑒
