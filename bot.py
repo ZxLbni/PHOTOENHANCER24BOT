@@ -5,7 +5,7 @@ import requests, wget, math
 from pyrogram.types import (InlineKeyboardButton,  InlineKeyboardMarkup)
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from PIL import Image, ImageEnhance, ImageOps
-from pyrogram import Client, filters, enums, ChatMemberStatus
+from pyrogram import Client, filters, enums
 from sh_bots.font_list import Fonts
 from pyrogram.types import *
 from telegraph import upload_file
@@ -37,6 +37,7 @@ photo_dict = {}
 API_ID = int(os.environ.get("API_ID", "10811400"))
 API_HASH = os.environ.get("API_HASH", "191bf5ae7a6c39771e7b13cf4ffd1279")
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "6409704598:AAGB9Yl8c1x7QQUEiBCs5SWeEZ-mvGsj8fs")
+ADMIN = int(os.environ.get("ADMIN", "6469754522"))
 RemoveBG_API = os.environ.get("RemoveBG_API", "24Lc9RTfcMEXPx1Y7MU89afF")
 FSUB_CHANNEL = os.environ.get("FSUB_CHANNEL", "Sunrises24botupdates")
 SUNRISES_PIC = os.environ.get("SUNRISES_PIC", "https://graph.org/file/38539dde74f07062c775d.jpg") #Telegraph link Start Pic 
@@ -935,24 +936,14 @@ async def media_info(client, message):
         print(e)
         await message.reply_text(f"[404] Error: {e}")
 
-
-
-
-@app.on_message(filters.command("giveaway") & filters.group)
+# Command to start a giveaway (only for admins)
+@app.on_message(filters.command("giveaway") & filters.group & filters.user(ADMIN))
 async def start_giveaway(client: Client, message: Message):
     chat_id = message.chat.id
-    user_id = message.from_user.id
-
-    # Check if the user is an admin
-    member = await client.get_chat_member(chat_id, user_id)
-    if member.status not in [ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]:
-        await message.reply("You need to be an admin to start a giveaway.")
-        return
-
     members = []
 
     # Get all members in the group
-    async for member in client.get_chat_members(chat_id):
+    async for member in client.iter_chat_members(chat_id):
         user = member.user
         if not user.is_bot:
             members.append((user.id, user.username))
@@ -961,6 +952,7 @@ async def start_giveaway(client: Client, message: Message):
         await message.reply("No members found in this group.")
         return
 
+    # Randomly select a winner
     winner_id, winner_username = random.choice(members)
 
     await message.reply(f"🎉 Congratulations! The winner is @{winner_username} (ID: {winner_id}). 🎉")
