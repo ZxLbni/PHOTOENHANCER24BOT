@@ -936,6 +936,7 @@ async def media_info(client, message):
         print(e)
         await message.reply_text(f"[404] Error: {e}")
 
+
 # Command to start a giveaway (only for admins)
 @app.on_message(filters.command("giveaway") & filters.group & filters.user(ADMIN))
 async def start_giveaway(client: Client, message: Message):
@@ -943,7 +944,8 @@ async def start_giveaway(client: Client, message: Message):
     members = []
 
     # Get all members in the group
-    async for member in client.iter_chat_members(chat_id):
+    chat_members = await client.get_chat_members(chat_id)
+    for member in chat_members:
         user = member.user
         if not user.is_bot:
             members.append((user.id, user.username))
@@ -956,7 +958,6 @@ async def start_giveaway(client: Client, message: Message):
     winner_id, winner_username = random.choice(members)
 
     await message.reply(f"🎉 Congratulations! The winner is @{winner_username} (ID: {winner_id}). 🎉")
-
 
 # Run the bot
 app.run()
