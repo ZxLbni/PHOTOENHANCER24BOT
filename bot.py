@@ -935,8 +935,13 @@ async def media_info(client, message):
         await message.reply_text(f"[404] Error: {e}")
 
 
+
 @app.on_message(filters.command("giveaway") & filters.group)
 async def start_giveaway(client: Client, message: Message):
+    if message.from_user is None:
+        await message.reply("This command cannot be used by anonymous admins or channels.")
+        return
+
     user_id = message.from_user.id
 
     # Check if the user is in the allowed admin IDs list
@@ -957,7 +962,6 @@ async def start_giveaway(client: Client, message: Message):
         await message.reply("No members found in this group.")
         return
 
-    # Randomly select a winner
     winner_id, winner_username = random.choice(members)
 
     await message.reply(f"🎉 Congratulations! The winner is @{winner_username} (ID: {winner_id}). 🎉")
