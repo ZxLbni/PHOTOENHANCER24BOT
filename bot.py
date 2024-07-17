@@ -1,6 +1,6 @@
 #Sᴜɴʀɪsᴇs Hᴀʀsʜᴀ 𝟸𝟺 🇮🇳 ᵀᴱᴸ
 from __future__ import unicode_literals
-import os, asyncio, time
+import os, asyncio, time, random 
 import requests, wget, math
 from pyrogram.types import (InlineKeyboardButton,  InlineKeyboardMarkup)
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
@@ -931,6 +931,27 @@ async def media_info(client, message):
     except Exception as e:
         print(e)
         await message.reply_text(f"[404] Error: {e}")
+
+@app.on_message(filters.command("giveaway") & filters.group)
+async def start_giveaway(client: Client, message: Message):
+    chat_id = message.chat.id
+    members = []
+
+    # Get all members in the group
+    async for member in client.get_chat_members(chat_id):
+        user = member.user
+        if not user.is_bot:
+            members.append((user.id, user.username))
+
+    if not members:
+        await message.reply("No members found in this group.")
+        return
+
+    # Randomly select a winner
+    winner_id, winner_username = random.choice(members)
+
+    await message.reply(f"🎉 Congratulations! The winner is @{winner_username} (ID: {winner_id}). 🎉")
+  
 
 # Run the bot
 app.run()
