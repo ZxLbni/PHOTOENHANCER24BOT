@@ -5,7 +5,7 @@ import requests, wget, math
 from pyrogram.types import (InlineKeyboardButton,  InlineKeyboardMarkup)
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from PIL import Image, ImageEnhance, ImageOps
-from pyrogram import Client, filters, enums
+from pyrogram import Client, filters, enums, ChatMemberStatus
 from sh_bots.font_list import Fonts
 from pyrogram.types import *
 from telegraph import upload_file
@@ -17,7 +17,7 @@ from pyrogram.types import Message
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from yt_dlp import YoutubeDL
-from pyrogram.types import Message, ChatMemberStatus
+
 
 
 INFO_TXT = """
