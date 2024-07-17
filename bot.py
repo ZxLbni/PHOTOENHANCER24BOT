@@ -17,6 +17,8 @@ from pyrogram.types import Message
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from yt_dlp import YoutubeDL
+from pyrogram.types import Message, ChatMemberStatus
+
 
 INFO_TXT = """
 🕵🏻 **User Info:**
