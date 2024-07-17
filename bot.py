@@ -35,6 +35,7 @@ photo_dict = {}
 API_ID = int(os.environ.get("API_ID", "10811400"))
 API_HASH = os.environ.get("API_HASH", "191bf5ae7a6c39771e7b13cf4ffd1279")
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "6409704598:AAGB9Yl8c1x7QQUEiBCs5SWeEZ-mvGsj8fs")
+ADMIN = int(os.environ.get("ADMIN", "6469754522"))
 RemoveBG_API = os.environ.get("RemoveBG_API", "24Lc9RTfcMEXPx1Y7MU89afF")
 FSUB_CHANNEL = os.environ.get("FSUB_CHANNEL", "Sunrises24botupdates")
 SUNRISES_PIC = os.environ.get("SUNRISES_PIC", "https://graph.org/file/38539dde74f07062c775d.jpg") #Telegraph link Start Pic 
@@ -101,6 +102,7 @@ Hᴇʀᴇ Is Tʜᴇ Hᴇʟᴘ Fᴏʀ Mʏ Cᴏᴍᴍᴀɴᴅs.
 🦋 ʜᴏᴡ ᴛᴏ ᴜꜱᴇ
 ◉ Reply To Any Photo 🖼️
 
+/giveaway - 𝐺𝑖𝑣𝑒𝑎𝑤𝑎𝑦 𝐼𝑛 𝐺𝑟𝑜𝑢𝑝 𝑂𝑛𝑙𝑦 [𝐴𝐷𝑀𝐼𝑁]
 /collage - 𝑆𝑒𝑛𝑑 10 𝑃ℎ𝑜𝑡𝑜𝑠 𝑇𝑜 𝑚𝑎𝑘𝑒 𝑐𝑜𝑙𝑙𝑎𝑔𝑒 𝑖𝑛 𝑐𝑜𝑙𝑢𝑚𝑛𝑠
 /portrait - 𝐶𝑜𝑛𝑣𝑒𝑟𝑡 𝑖𝑚𝑎𝑔𝑒 𝑡𝑜 𝑃𝑜𝑟𝑡𝑟𝑎𝑖𝑡
 /grayscale - 𝐶𝑜𝑛𝑣𝑒𝑟𝑡 𝑖𝑚𝑎𝑔𝑒 𝑡𝑜 𝑔𝑟𝑎𝑦𝑠𝑐𝑎𝑙𝑒
@@ -932,8 +934,16 @@ async def media_info(client, message):
         print(e)
         await message.reply_text(f"[404] Error: {e}")
 
+
 @app.on_message(filters.command("giveaway") & filters.group)
 async def start_giveaway(client: Client, message: Message):
+    user_id = message.from_user.id
+
+    # Check if the user is in the allowed admin IDs list
+    if user_id not in ADMIN:
+        await message.reply("You do not have permission to start a giveaway.")
+        return
+
     chat_id = message.chat.id
     members = []
 
@@ -951,7 +961,7 @@ async def start_giveaway(client: Client, message: Message):
     winner_id, winner_username = random.choice(members)
 
     await message.reply(f"🎉 Congratulations! The winner is @{winner_username} (ID: {winner_id}). 🎉")
-  
+
 
 # Run the bot
 app.run()
