@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import os, asyncio, time, random 
 import requests, wget, math
 from pyrogram.types import (InlineKeyboardButton,  InlineKeyboardMarkup)
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery, ChatMemberStatus
 from PIL import Image, ImageEnhance, ImageOps
 from pyrogram import Client, filters, enums
 from sh_bots.font_list import Fonts
@@ -35,7 +35,6 @@ photo_dict = {}
 API_ID = int(os.environ.get("API_ID", "10811400"))
 API_HASH = os.environ.get("API_HASH", "191bf5ae7a6c39771e7b13cf4ffd1279")
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "6409704598:AAGB9Yl8c1x7QQUEiBCs5SWeEZ-mvGsj8fs")
-ADMIN = int(os.environ.get("ADMIN", "6469754522"))
 RemoveBG_API = os.environ.get("RemoveBG_API", "24Lc9RTfcMEXPx1Y7MU89afF")
 FSUB_CHANNEL = os.environ.get("FSUB_CHANNEL", "Sunrises24botupdates")
 SUNRISES_PIC = os.environ.get("SUNRISES_PIC", "https://graph.org/file/38539dde74f07062c775d.jpg") #Telegraph link Start Pic 
@@ -936,20 +935,18 @@ async def media_info(client, message):
 
 
 
+
 @app.on_message(filters.command("giveaway") & filters.group)
 async def start_giveaway(client: Client, message: Message):
-    if message.from_user is None:
-        await message.reply("This command cannot be used by anonymous admins or channels.")
-        return
-
+    chat_id = message.chat.id
     user_id = message.from_user.id
 
-    # Check if the user is in the allowed admin IDs list
-    if user_id not in ADMIN:
-        await message.reply("You do not have permission to start a giveaway.")
+    # Check if the user is an admin
+    member = await client.get_chat_member(chat_id, user_id)
+    if member.status not in [ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]:
+        await message.reply("You need to be an admin to start a giveaway.")
         return
 
-    chat_id = message.chat.id
     members = []
 
     # Get all members in the group
