@@ -945,8 +945,7 @@ async def start_giveaway(client: Client, message: Message):
     members = []
 
     # Get all members in the group
-    chat_members = await client.get_chat_members(chat_id)
-    for member in chat_members:
+    async for member in client.get_chat_members(chat_id):
         user = member.user
         if not user.is_bot:
             members.append((user.id, user.username))
@@ -959,7 +958,6 @@ async def start_giveaway(client: Client, message: Message):
     winner_id, winner_username = random.choice(members)
 
     await message.reply(f"🎉 Congratulations! The winner is @{winner_username} (ID: {winner_id}). 🎉")
-
 
 # Run the bot
 app.run()
