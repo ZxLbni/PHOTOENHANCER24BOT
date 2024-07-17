@@ -34,7 +34,7 @@ photo_dict = {}
 # Retrieve your Telegram API credentials and bot token
 API_ID = int(os.environ.get("API_ID", "10811400"))
 API_HASH = os.environ.get("API_HASH", "191bf5ae7a6c39771e7b13cf4ffd1279")
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "6409704598:AAGxnl0_LIxcwDREAk5pomWfHRkppwKm5zc")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "6409704598:AAGB9Yl8c1x7QQUEiBCs5SWeEZ-mvGsj8fs")
 RemoveBG_API = os.environ.get("RemoveBG_API", "24Lc9RTfcMEXPx1Y7MU89afF")
 FSUB_CHANNEL = os.environ.get("FSUB_CHANNEL", "Sunrises24botupdates")
 SUNRISES_PIC = os.environ.get("SUNRISES_PIC", "https://graph.org/file/38539dde74f07062c775d.jpg") #Telegraph link Start Pic 
