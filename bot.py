@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import os, asyncio, time, random 
 import requests, wget, math
 from pyrogram.types import (InlineKeyboardButton,  InlineKeyboardMarkup)
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery, ChatMemberStatus
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from PIL import Image, ImageEnhance, ImageOps
 from pyrogram import Client, filters, enums
 from sh_bots.font_list import Fonts
