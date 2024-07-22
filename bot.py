@@ -1,4 +1,4 @@
-#Sᴜɴʀɪsᴇs Hᴀʀsʜᴀ 𝟸𝟺 🇮🇳 ᵀᴱᴸ
+#Nᴏᴏʙ™ 🇮🇳 ᵀᴱᴸ
 from __future__ import unicode_literals
 import os, asyncio, time, random 
 import requests, wget, math
@@ -34,13 +34,13 @@ photo_dict = {}
 #ALL FILES UPLOADED - CREDITS 🌟 - @Sunrises_24
 
 # Retrieve your Telegram API credentials and bot token
-API_ID = int(os.environ.get("API_ID", "10811400"))
-API_HASH = os.environ.get("API_HASH", "191bf5ae7a6c39771e7b13cf4ffd1279")
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "6409704598:AAGB9Yl8c1x7QQUEiBCs5SWeEZ-mvGsj8fs")
-ADMIN = int(os.environ.get("ADMIN", "6756856101"))
+API_ID = int(os.environ.get("API_ID", "22419004"))
+API_HASH = os.environ.get("API_HASH", "34982b52c4a83c2af3ce8f4fe12fe4e1")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "6820587229:AAEY2GJYCyYTm3DPhIzSPO6BaWuz2xmFAvI")
+ADMIN = int(os.environ.get("ADMIN", "6742022802"))
 RemoveBG_API = os.environ.get("RemoveBG_API", "24Lc9RTfcMEXPx1Y7MU89afF")
-FSUB_CHANNEL = os.environ.get("FSUB_CHANNEL", "Sunrises24botupdates")
-SUNRISES_PIC = os.environ.get("SUNRISES_PIC", "https://graph.org/file/38539dde74f07062c775d.jpg") #Telegraph link Start Pic 
+FSUB_CHANNEL = os.environ.get("FSUB_CHANNEL", "NOOBPrivate")
+SUNRISES_PIC = os.environ.get("SUNRISES_PIC", "https://telegra.ph/file/3999ba9e4ce962ff15a78.jpg") #Telegraph link Start Pic 
 
 API = "https://apis.xditya.me/lyrics?song="
 
@@ -82,17 +82,17 @@ async def start(client, message):
                 caption=start_text,
                 reply_markup=InlineKeyboardMarkup(
                     [
-                        [InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ 🧑🏻‍💻", url=f"https://t.me/Sunrises_24"),
-                         InlineKeyboardButton("Uᴘᴅᴀᴛᴇꜱ 📢", url="https://t.me/Sunrises24BotUpdates")],
-                        [InlineKeyboardButton("Support ❤️‍🔥", url="https://t.me/Sunrises24botSupport"),
-                         InlineKeyboardButton("Cʜᴀɴɴᴇʟ 🎞️", url="https://t.me/sunriseseditsoffical6")]
+                        [InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ 🧑🏻‍💻", url=f"https://t.me/L_abani"),
+                         InlineKeyboardButton("Uᴘᴅᴀᴛᴇꜱ 📢", url="https://t.me/NOOBPrivate")],
+                        [InlineKeyboardButton("Support ❤️‍🔥", url="https://t.me/+Vng7VDXDy_M4MjNl"),
+                         InlineKeyboardButton("Cʜᴀɴɴᴇʟ 🎞️", url="https://t.me/NOOBPrivate")]
                     ]
                 ),
                 reply_to_message_id=getattr(message, "message_id", None)
             )
             return
 
-print("Bot Started!🦋 © t.me/Sunrises_24")
+print("Bot Started!🦋 © t.me/l_abani")
 
 # Function to handle /help command
 @app.on_message(filters.command("help"))
@@ -136,7 +136,7 @@ Enter Any Text Eg:- /font [text]
 
  💭This bot is designed to apply filters to images.
  
-🔱 𝐌𝐚𝐢𝐧𝐭𝐚𝐢𝐧𝐞𝐝 𝐁𝐲 : <a href='https://t.me/Sunrises_24'>𝐒𝐔𝐍𝐑𝐈𝐒𝐄𝐒™</a></b>
+🔱 𝐌𝐚𝐢𝐧𝐭𝐚𝐢𝐧𝐞𝐝 𝐁𝐲 : <a href='https://t.me/L_abani'>Nᴏᴏʙ™</a></b>
     
    """
     await message.reply_text(help_text)
@@ -146,10 +146,10 @@ Enter Any Text Eg:- /font [text]
 @app.on_message(filters.command("about"))
 async def about_command(client, message):
     about_text = """
-<b>✯ Mʏ Nᴀᴍᴇ :  <a href=https://t.me/PHOTOENHANCER24BOT>🦋Pʜᴏᴛᴏ Eɴʜᴀɴᴄᴇʀ 𝟸𝟺 Bᴏᴛ🦋</a></b></b>
-<b>✯ Dᴇᴠᴇʟᴏᴘᴇʀ 🧑🏻‍💻 : <a href=https://t.me/Sunrises_24>𝐒𝐔𝐍𝐑𝐈𝐒𝐄𝐒™ ✨</a></b>
-<b>✯ Uᴘᴅᴀᴛᴇs 📢 : <a href=https://t.me/Sunrises24BotUpdates>𝐔𝐏𝐃𝐀𝐓𝐄𝐒 📢</a></b>
-<b>✯ Bᴜɪʟᴅ Sᴛᴀᴛᴜs 📊 : ᴠ2 [Sᴛᴀʙʟᴇ]</b>
+<b>✯ Mʏ Nᴀᴍᴇ :  <a href=https://t.me/NOOBPV_PHOTOENCBot>🦋Pʜᴏᴛᴏ Eɴʜᴀɴᴄᴇʀ 𝟸𝟺 Bᴏᴛ🦋</a></b></b>
+<b>✯ Dᴇᴠᴇʟᴏᴘᴇʀ 🧑🏻‍💻 : <a href=https://t.me/L_abani>Nᴏᴏʙ™ ✨</a></b>
+<b>✯ Uᴘᴅᴀᴛᴇs 📢 : <a href=https://t.me/NOOBPrivate>𝐔𝐏𝐃𝐀𝐓𝐄𝐒 📢</a></b>
+<b>✯ Bᴜɪʟᴅ Sᴛᴀᴛᴜs 📊 : ᴠ2 [Sᴛᴀʙʟᴇ-Nᴏᴏʙ]</b>
     """
     await message.reply_text(about_text)
 
@@ -301,7 +301,7 @@ async def song(client, message):
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
 
-        cap = "**BY›› [Sᴜɴʀɪꜱᴇꜱ™](https://t.me/sunrises24botupdates)**"
+        cap = "**BY›› [Sᴜɴʀɪꜱᴇꜱ™](https://t.me/NOOBPrivate)**"
         secmul, dur, dur_arr = 1, 0, duration.split(':')
         for i in range(len(dur_arr)-1, -1, -1):
             dur += (int(dur_arr[i]) * secmul)
@@ -452,9 +452,9 @@ async def sng(client, message):
           await mee.delete()
           try:
             await mee.delete()
-            await client.send_message(chat_id, text = rpl, reply_to_message_id = message.id, reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs ", url = f"t.me/Sunrises24BotUpdates")]]))
+            await client.send_message(chat_id, text = rpl, reply_to_message_id = message.id, reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs ", url = f"t.me/NOOBPrivate")]]))
           except Exception as e:                            
-             await message.reply_text(f"I Can't Find A Song With `{song}`", quote = True, reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs", url = f"t.me/Sunrises24BotUpdates")]]))
+             await message.reply_text(f"I Can't Find A Song With `{song}`", quote = True, reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs", url = f"t.me/NOOBPrivate")]]))
 
 
 def search(song):
@@ -466,7 +466,7 @@ def lyrics(song):
         fin = search(song)
         text = f'**🎶 Sᴜᴄᴄᴇꜱꜰᴜʟʟy Exᴛʀᴀᴄᴛᴇᴅ Lyɪʀɪᴄꜱ Oꜰ {song}**\n\n'
         text += f'`{fin["lyrics"]}`'
-        text += f'\n\n\n**Made By Sᴜɴʀɪsᴇs Hᴀʀsʜᴀ 𝟸𝟺 🇮🇳 ᵀᴱᴸ**'
+        text += f'\n\n\n**Made By Nᴏᴏʙ™ 🇮🇳 ᵀᴱᴸ**'
         return text
 
 #ALL FILES UPLOADED - CREDITS 🌟 - @Sunrises_24
@@ -907,8 +907,8 @@ async def media_info(client, message):
             return
 
         buttons = [[
-            InlineKeyboardButton("✨️ Support", url="https://t.me/Sunrises24botsupport"),
-            InlineKeyboardButton("📢 Updates", url="https://t.me/Sunrises24botupdates")
+            InlineKeyboardButton("✨️ Support", url="https://t.me/+Vng7VDXDy_M4MjNl"),
+            InlineKeyboardButton("📢 Updates", url="https://t.me/NOOBPrivate")
         ]]
         
         if user.photo:
